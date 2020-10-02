@@ -1,0 +1,27 @@
+<h1 id="tableLabel">Todos</h1>
+
+<p>Here are all of your tasks.</p>
+
+<p *ngIf="!dataFromServer"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="dataFromServer">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Task State</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of dataFromServer">
+      <td>{{ data.id }}</td>
+      <td><s *ngIf="data.isCompleted">{{ data.title }}</s><p *ngIf="!data.isCompleted">{{ data.title }}</p></td>
+      <td>{{ data.state }}</td>
+      <td><button class="btn btn-success" style="margin-left: 10px; margin-right: 10px;" *ngIf="data.state != 'Completed'" (click)="changeState(data, 'Completed')">Completed</button>
+        <button class="btn btn-info" style="margin-left: 10px; margin-right: 10px;" *ngIf="data.state != 'InProgress'" (click)="changeState(data, 'InProgress')">InProgress</button>
+        <button class="btn btn-warning" style="margin-left: 10px; margin-right: 10px;" *ngIf="data.state != 'Todo'" (click)="changeState(data, 'Todo')">Todo</button>
+        <button class="btn btn-danger" style="margin-left: 10px; margin-right: 10px;" (click)="delete(data)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
